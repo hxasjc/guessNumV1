@@ -16,16 +16,25 @@ public class guessNumV1 extends javax.swing.JFrame {
     static int minNum = 1;
 
     private void initUI() {
-        Dimension minimumSize = new Dimension(214, 131);
+        Dimension minimumSize = new Dimension(250, 140);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Guess the Number");
         setMinimumSize(minimumSize);
+        setSize(minimumSize);
+        ImageIcon img = new ImageIcon("./Saulrender.jpg");
+        setIconImage(img.getImage());
 
         jLabel1 = new JLabel("Guess the number below:");
 
         jLabel2 = new JLabel("Number is between 1 and 100 inclusive.");
 
-        entryField = new JTextField("Enter a number");
+        //entryField = new JTextField("Enter a number");
+        entryField = new JTextField();
+        entryField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                entryFieldAction(evt);
+            }
+        });
 
         guessButton = new JButton("Guess!");
         guessButton.addActionListener(new ActionListener() {
@@ -66,6 +75,7 @@ public class guessNumV1 extends javax.swing.JFrame {
             .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        setSize(minimumSize);
         pack();
     }
 
@@ -77,7 +87,15 @@ public class guessNumV1 extends javax.swing.JFrame {
         return str != null && str.matches("[0-9.-]+");
     }
 
+    private static void entryFieldAction(ActionEvent evt) {
+        checkAnswer();
+    }
+
     private static void guessButtonClicked(ActionEvent evt) {
+        checkAnswer();
+    }
+
+    public static void checkAnswer() {
         String input = entryField.getText();
         boolean isNumeric = isNumeric(input);
         if (isNumeric) {
